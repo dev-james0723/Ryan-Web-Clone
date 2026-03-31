@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <title>Keys &amp; Shutters Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff" id="meta-theme-color">
   <meta name="description" content="Keys & Shutters — Photography Portfolio 2022-2026. Selected works from New York, MSM, portraits, landscapes, cityscapes, and wildlife.">
   <meta property="og:title" content="Keys & Shutters Portfolio">
   <meta property="og:type" content="website">
@@ -14,6 +15,18 @@
   <!-- Montserrat ≈ Proxima Nova (title); Roboto Condensed italic ≈ proxima-nova-condensed (section quotes) -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&family=Roboto+Condensed:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    try {
+      var th = localStorage.getItem('ks-theme');
+      if (th === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        var mc = document.getElementById('meta-theme-color');
+        if (mc) mc.setAttribute('content', '#121212');
+      }
+      var lg = localStorage.getItem('ks-lang');
+      if (lg === 'zh-Hant') document.documentElement.setAttribute('lang', 'zh-Hant');
+    } catch (e) {}
+  </script>
 </head>
 <body>
 
@@ -25,7 +38,7 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>Keys &amp; Shutters</h1>
-      <p class="subtitle">portfolio 2022-2026</p>
+      <p class="subtitle" data-i18n="subtitle">portfolio 2022-2026</p>
     </div>
     <div class="scroll-hint" aria-hidden="true">
       <span></span>
@@ -36,7 +49,7 @@
   <section class="gallery-section gallery-section--first" id="newyork">
     <div class="content-shell">
     <div class="section-heading fade-in">
-      <blockquote>Selected Works from New York &amp; MSM - 2025-26</blockquote>
+      <blockquote data-i18n="sec_ny">Selected Works from New York &amp; MSM - 2025-26</blockquote>
     </div>
     <div class="photo-grid">
       <!-- Row: 2 landscape + 1 portrait -->
@@ -95,7 +108,7 @@
   <section class="gallery-section" id="portraits">
     <div class="content-shell">
     <div class="section-heading fade-in">
-      <blockquote>Selected Portraits</blockquote>
+      <blockquote data-i18n="sec_port">Selected Portraits</blockquote>
     </div>
     <div class="photo-grid">
       <!-- Row: 2 portrait -->
@@ -140,7 +153,7 @@
   <section class="gallery-section" id="landscapes">
     <div class="content-shell">
     <div class="section-heading fade-in">
-      <blockquote>Selected Landscapes &amp; Cityscapes</blockquote>
+      <blockquote data-i18n="sec_land">Selected Landscapes &amp; Cityscapes</blockquote>
     </div>
     <div class="photo-grid">
       <!-- Row: landscape + portrait -->
@@ -179,7 +192,7 @@
   <section class="gallery-section" id="wildlife">
     <div class="content-shell">
     <div class="section-heading fade-in">
-      <blockquote>Select Wildlife</blockquote>
+      <blockquote data-i18n="sec_wild">Select Wildlife</blockquote>
     </div>
     <div class="photo-grid">
       <!-- Row: portrait + landscape -->
@@ -211,11 +224,49 @@
     </div>
   </section>
 
+  <footer class="site-footer" id="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <span class="site-footer__name">Keys &amp; Shutters</span>
+        <span class="site-footer__tag" data-i18n="footer_tag">Photography portfolio</span>
+      </div>
+      <div class="site-footer__tools">
+        <div class="site-footer__field">
+          <label class="site-footer__label" for="footer-section-nav" data-i18n="nav_label">Jump to section</label>
+          <select id="footer-section-nav" class="site-footer__select" aria-describedby="footer-section-nav-hint">
+            <option value="" data-i18n="nav_placeholder">Choose a section…</option>
+            <option value="#hero" data-i18n="nav_hero">Cover</option>
+            <option value="#newyork" data-i18n="nav_ny">New York &amp; MSM</option>
+            <option value="#portraits" data-i18n="nav_port">Portraits</option>
+            <option value="#landscapes" data-i18n="nav_land">Landscapes &amp; Cityscapes</option>
+            <option value="#wildlife" data-i18n="nav_wild">Wildlife</option>
+          </select>
+          <span id="footer-section-nav-hint" class="visually-hidden" data-i18n="nav_hint">Opens the chosen part of this page.</span>
+        </div>
+        <div class="site-footer__field">
+          <label class="site-footer__label" for="footer-lang" data-i18n="lang_label">Language</label>
+          <select id="footer-lang" class="site-footer__select">
+            <option value="en">English</option>
+            <option value="zh-Hant">繁體中文</option>
+          </select>
+        </div>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" title="">
+          <span class="theme-toggle__icons" aria-hidden="true">
+            <span class="theme-toggle__sun">☀</span>
+            <span class="theme-toggle__moon">☾</span>
+          </span>
+          <span class="theme-toggle__label">Dark mode</span>
+        </button>
+      </div>
+    </div>
+    <p class="site-footer__copy" data-i18n="footer_copy">© 2022–2026 Keys &amp; Shutters. All images by the artist.</p>
+  </footer>
+
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
-    <button class="lightbox-close" aria-label="Close">&times;</button>
-    <button class="lightbox-prev" aria-label="Previous image">&#8249;</button>
-    <button class="lightbox-next" aria-label="Next image">&#8250;</button>
+    <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+    <button type="button" class="lightbox-prev" aria-label="Previous image">&#8249;</button>
+    <button type="button" class="lightbox-next" aria-label="Next image">&#8250;</button>
     <div class="lightbox-content">
       <img id="lightbox-img" src="" alt="Full size preview">
     </div>
