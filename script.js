@@ -211,6 +211,35 @@
     }
   });
 
+  // Touch swipe on the image area: left → next, right → previous
+  const lbContent = lightbox.querySelector('.lightbox-content');
+  const SWIPE_MIN_PX = 48;
+  const SWIPE_HORIZONTAL_RATIO = 1.15;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  function onLbTouchStart(e) {
+    if (!lightbox.classList.contains('active') || e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }
+
+  function onLbTouchEnd(e) {
+    if (!lightbox.classList.contains('active') || e.changedTouches.length !== 1) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+    if (Math.abs(dx) < SWIPE_MIN_PX) return;
+    if (Math.abs(dx) < Math.abs(dy) * SWIPE_HORIZONTAL_RATIO) return;
+    if (dx < 0) navigate(1);
+    else navigate(-1);
+  }
+
+  if (lbContent) {
+    lbContent.addEventListener('touchstart', onLbTouchStart, { passive: true });
+    lbContent.addEventListener('touchend', onLbTouchEnd, { passive: true });
+  }
+
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('active')) return;
     if (e.key === 'Escape') closeLightbox();

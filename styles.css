@@ -71,8 +71,10 @@ img {
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh;
   min-height: 500px;
+  /* svh tracks the *visible* mobile viewport when the URL bar is expanded (unlike 100vh) */
+  min-height: 100vh;
+  min-height: 100svh;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
@@ -109,7 +111,10 @@ img {
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 0 5% 80px;
+  padding: 0 5% max(5rem, env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   animation: heroFadeIn 1.2s ease-out;
 }
 
@@ -140,11 +145,10 @@ img {
 }
 
 .scroll-hint {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   z-index: 2;
+  margin-top: 0.85rem;
+  flex-shrink: 0;
 }
 
 .scroll-hint span {
@@ -160,6 +164,40 @@ img {
 @keyframes scrollBounce {
   0%, 100% { transform: translateY(0) rotate(45deg); opacity: 0.6; }
   50% { transform: translateY(8px) rotate(45deg); opacity: 1; }
+}
+
+/* Mobile Chrome / Safari: keep title, subtitle, and chevron in first paint */
+@media (max-width: 767px) {
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: 100svh;
+  }
+
+  .hero-content {
+    padding: 0 5% max(0.35rem, env(safe-area-inset-bottom, 0px));
+    /* Lift entire cluster above bottom browser UI */
+    margin-bottom: max(3rem, 12vh);
+    margin-bottom: max(3rem, 14svh);
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2.2rem, 8vw, 3.35rem);
+  }
+
+  .hero-content .subtitle {
+    font-size: clamp(0.78rem, 3.5vw, 1.05rem);
+    line-height: 1.45;
+  }
+
+  .scroll-hint {
+    margin-top: 0.5rem;
+  }
+
+  .scroll-hint span {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 @keyframes heroFadeIn {
@@ -341,6 +379,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: manipulation;
 }
 
 .lightbox-content img {
@@ -351,6 +390,9 @@ img {
   object-fit: contain;
   border-radius: 2px;
   animation: lightboxIn 0.28s ease-out;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 @keyframes lightboxIn {
