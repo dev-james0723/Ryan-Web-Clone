@@ -18,6 +18,8 @@
   --color-input-bg: #ffffff;
   --color-input-border: #c8c8c8;
   --color-input-text: #111111;
+  /* Match reference portfolio: clear white gutters between collage cells (~12–17px at typical widths) */
+  --gallery-gap: clamp(12px, 1.45vw, 17px);
 }
 
 html[data-theme='dark'] {
@@ -260,15 +262,15 @@ img {
 .photo-grid {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding-bottom: 4px;
+  gap: var(--gallery-gap);
+  padding-bottom: var(--gallery-gap);
   background: var(--color-gallery);
   transition: background-color 0.25s ease;
 }
 
 .grid-row {
   display: flex;
-  gap: 4px;
+  gap: var(--gallery-gap);
   width: 100%;
 }
 
@@ -614,6 +616,10 @@ html[data-theme='dark'] .theme-toggle__moon {
 }
 
 @media (max-width: 767px) {
+  :root {
+    --gallery-gap: clamp(10px, 2.8vw, 14px);
+  }
+
   .site-footer__inner {
     flex-direction: column;
     align-items: stretch;
@@ -647,11 +653,6 @@ html[data-theme='dark'] .theme-toggle__moon {
   .content-shell {
     padding-left: 5%;
     padding-right: 5%;
-  }
-
-  .photo-grid,
-  .grid-row {
-    gap: 3px;
   }
 
   .grid-row.trio-llp,
